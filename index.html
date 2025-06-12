@@ -55,10 +55,13 @@
             item.className = 'feature-item';
             item.textContent = name;
             item.onclick = () => {
-              const latlng = layer.getLatLng();
-              map.setView(latlng, 15);
-              layer.openPopup();
-            };
+            const latlng = layer.getLatLng();
+            map.setView(latlng, Math.max(map.getZoom(), 17), {
+              animate: true,
+              duration: 0.5
+            });
+            layer.openPopup();
+          };
             sidebar.appendChild(item);
 
             layer.bindPopup(`<strong>${name}</strong>`);
