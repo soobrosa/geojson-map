@@ -50,21 +50,30 @@
             const props = feature.properties;
             const name = props.name || props.nome || "Sem nome";
 
-            // Create sidebar item
+            // Sidebar item
             const item = document.createElement('div');
             item.className = 'feature-item';
             item.textContent = name;
             item.onclick = () => {
-            const latlng = layer.getLatLng();
-            map.setView(latlng, Math.max(map.getZoom(), 17), {
-              animate: true,
-              duration: 0.5
-            });
-            layer.openPopup();
-          };
+              const latlng = layer.getLatLng();
+              map.setView(latlng, Math.max(map.getZoom(), 17), {
+                animate: true,
+                duration: 0.5
+              });
+              layer.openPopup();
+            };
             sidebar.appendChild(item);
-
+          
+            // Map click → zoom & popup
             layer.bindPopup(`<strong>${name}</strong>`);
+            layer.on('click', () => {
+              const latlng = layer.getLatLng();
+              map.setView(latlng, Math.max(map.getZoom(), 17), {
+                animate: true,
+                duration: 0.5
+              });
+              layer.openPopup();
+            });
           },
           pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
